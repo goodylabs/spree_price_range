@@ -1,0 +1,37 @@
+<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<div class='toolbar'>
+  <ul class='actions header-action-links inline-menu'>
+    <li>
+      <%= button_link_to Spree.t("new_price_filter"), new_object_url, :icon => 'add'  %>
+    </li>
+  </ul>
+  <br class='clear' />
+</div>
+
+<h1><%= Spree.t("price_filters") %></h1>
+
+<table class="index">
+  <thead>
+    <tr data-hook="admin_price_filters_index_headers">
+      <th><%= Spree.t("position") %></th>
+      <th><%= Spree.t("from") %></th>
+      <th><%= Spree.t("to") %></th>
+      <th data-hook="admin_price_filters_index_header_actions">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @price_filters.each do |price_filter| %>
+      <tr id="<%= dom_id price_filter %>" data-hook="admin_price_filters_index_rows">
+        <td><%= price_filter.position %></td>
+        <td><%= price_filter.from %></td>
+        <td><%= price_filter.to %></td>
+        <td width="140px" data-hook="admin_price_filters_index_row_actions">
+          <%= link_to_edit price_filter %> &nbsp;
+          <%= link_to_delete price_filter %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

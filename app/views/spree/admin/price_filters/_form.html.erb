@@ -1,0 +1,19 @@
+<div data-hook="admin_price_filter_form_fields">
+  <%= f.field_container :position do %>
+    <%= f.label :position, Spree.t("position") %><br />
+    <%= f.text_field :position, :class => 'fullwidth title' %>
+    <%= error_message_on :price_filter, :position %>
+  <% end %>
+
+  <%= f.field_container :from do %>
+    <%= f.label :from, Spree.t("from") %><br />
+    <%= f.text_field :from,  :class => 'fullwidth title' %>
+    <%= error_message_on :price_filter, :from%>
+  <% end %>
+
+  <%= f.field_container :to do %>
+    <%= f.label :to, Spree.t("to") %><br />
+    <%= f.text_field :to,  :class => 'fullwidth title' %>
+    <%= error_message_on :price_filter, :to %>
+  <% end %>
+</div>
