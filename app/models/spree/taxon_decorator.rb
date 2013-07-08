@@ -19,16 +19,24 @@ Spree::Taxon.class_eval do
     all = Spree::PriceFilter.find(:all, :order => :position)
     conds = []
     first = all.delete(all.first)
-    conds << [Spree.t(:under_price, :price => format_price(first.to))   , v[:amount].lteq(first.to)]
-    last = all.delete(all.last)
-    all.each { |item|  conds << [ "#{format_price(item.from)} - #{format_price(item.to)}"        , v[:amount].in(item.from..item.to) ]    }
-    conds << [ Spree.t(:or_over_price, :price => format_price(last.from)) , v[:amount].gteq(last.from)]
+    unless first.nil?
+      conds << [Spree.t(:under_price, :price => format_price(first.to)), v[:amount].lteq(first.to)]
+    end
 
-    { :name   => Spree.t(:price_range),
+    last = all.delete(all.last)
+    unless last.nil?
+      all.each do |item|  
+        conds << [ "#{format_price(item.from)} - #{format_price(item.to)}", v[:amount].in(item.from..item.to) ]    
+      end
+      conds << [ Spree.t(:or_over_price, :price => format_price(last.from)) , v[:amount].gteq(last.from)]
+    end
+
+    { 
+      :name   => Spree.t(:price_range),
       :scope  => :price_range_any,
       :conds  => Hash[*conds.flatten],
       :labels => conds.map {|k,v| [k,k]}
-      }
+    }
   end
 
 end
